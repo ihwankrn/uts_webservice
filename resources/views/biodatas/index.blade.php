@@ -20,7 +20,12 @@
                 <div class="card h-100 shadow-sm rounded-3">
                     <div class="p-3 pb-0">
                         @if ($item->foto)
-                            <img src="{{ asset('storage/' . $item->foto) }}"
+                            @php
+                                $fotoUrl = str_starts_with($item->foto, 'images/')
+                                    ? asset($item->foto)
+                                    : asset('storage/' . $item->foto);
+                            @endphp
+                            <img src="{{ $fotoUrl }}"
                                  class="card-img-top rounded-2 object-fit-cover"
                                  style="height: 290px; width: 100%;"
                                  alt="{{ $item->nama }}">

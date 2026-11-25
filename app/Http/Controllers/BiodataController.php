@@ -3,62 +3,81 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use App\Models\Biodata;
 
 class BiodataController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $biodatas = Biodata::oldest()->get();
+
+        return view('biodatas.index', compact('biodatas'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        return view('biodatas.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'nama' => 'required|string|max:100',
+            'nim' => 'required|string|max:30',
+            'peran' => 'required|string|max:50',
+            'deskripsi' => 'required|string',
+            'foto' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+        ]);
+
+        if ($request->hasFile('foto')) {
+            $validated['foto'] = $request->file('foto')->store('foto-biodata', 'public');
+        }
+
+        Biodata::create($validated);
+
+        return redirect()->route('biodatas.index')
+            ->with('success', 'Biodata berhasil ditambahkan.');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function edit(Biodata $biodata)
     {
-        //
+        return view('biodatas.edit', compact('biodata'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function update(Request $request, Biodata $biodata)
     {
-        //
+        $validated = $request->validate([
+            'nama' => 'required|string|max:100',
+            'nim' => 'required|string|max:30',
+            'peran' => 'required|string|max:50',
+            'deskripsi' => 'required|string',
+            'foto' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+        ]);
+
+        if ($request->hasFile('foto')) {
+            if ($biodata->foto) {
+                Storage::disk('public')->delete($biodata->foto);
+            }
+
+            $validated['foto'] = $request->file('foto')->store('foto-biodata', 'public');
+        }
+
+        $biodata->update($validated);
+
+        return redirect()->route('biodatas.index')
+            ->with('success', 'Biodata berhasil diperbarui.');
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function destroy(Biodata $biodata)
     {
-        //
-    }
+        if ($biodata->foto) {
+            Storage::disk('public')->delete($biodata->foto);
+        }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        $biodata->delete();
+
+        return redirect()->route('biodatas.index')
+            ->with('success', 'Biodata berhasil dihapus.');
     }
 }

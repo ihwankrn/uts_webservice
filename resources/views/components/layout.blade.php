@@ -25,10 +25,10 @@
                         <a class="nav-link" href="#">Features</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Ikhwan Kurniawan &amp; [Nama Rekan]</a>
+                        <a class="nav-link" href="#">Ihwan Kurniawan &amp; Zelly Marliaty</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link disabled" aria-disabled="true">24010110164 &amp; [NIM Rekan]</a>
+                        <a class="nav-link disabled" aria-disabled="true">24010110164 &amp; 24010110161</a>
                     </li>
                 </ul>
             </div>
@@ -57,7 +57,7 @@
             <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">About</a></li>
         </ul>
         <p class="text-center text-body-secondary mb-0">
-            &copy; 2025 Dibuat Sejujurjurnya Oleh Team Ikhwan Kurniawan dan [Nama Rekan] Tanpa Mencotek dari Tim Lain
+            © 2025 Dibuat Sejujurjurnya Oleh Team Ihwan Kurniawan dan Zelly Marliaty Tanpa Mencotek dari Tim Lain
         </p>
     </footer>
 
